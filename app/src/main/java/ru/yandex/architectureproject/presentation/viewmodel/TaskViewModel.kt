@@ -20,6 +20,7 @@ import ru.yandex.architectureproject.domain.GetAllTasksUseCase
 import ru.yandex.architectureproject.domain.IncompleteTaskUseCase
 import ru.yandex.architectureproject.presentation.state.TaskAction
 import ru.yandex.architectureproject.presentation.state.TaskState
+import java.util.concurrent.ConcurrentHashMap
 
 class TaskViewModel(
     private val addTaskUseCase: AddTaskUseCase,
@@ -32,7 +33,7 @@ class TaskViewModel(
     private val _state = MutableStateFlow<TaskState>(TaskState.Loading)
     val state: StateFlow<TaskState> = _state.asStateFlow()
 
-    private val taskForDeletionJobMap: MutableMap<Int, Job?> = mutableMapOf()
+    private val taskForDeletionJobMap: MutableMap<Int, Job?> = ConcurrentHashMap()
 
     init {
         reduce(TaskAction.LoadTasks)
